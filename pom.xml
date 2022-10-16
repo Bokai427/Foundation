@@ -12,7 +12,7 @@
 	<packaging>jar</packaging>
 
 	<name>Foundation</name>
-	<description>A framework for easy creation of rich Bukkit plugins.</description>
+	<description>A fork of foundation by BOKAI</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,6 +29,13 @@
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
 		</repository>
 	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>my-repository</id>
+			<url>https://mvn.kod-mc.com/Foundation</url>
+		</repository>
+	</distributionManagement>
 
 	<dependencies>
 
@@ -196,22 +203,22 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.4.0</version>
-				<configuration>
-					<doclint>none</doclint>
-				</configuration>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-javadoc-plugin</artifactId>-->
+<!--				<version>3.4.0</version>-->
+<!--				<configuration>-->
+<!--					<doclint>none</doclint>-->
+<!--				</configuration>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>attach-javadocs</id>-->
+<!--						<goals>-->
+<!--							<goal>jar</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 </project>
