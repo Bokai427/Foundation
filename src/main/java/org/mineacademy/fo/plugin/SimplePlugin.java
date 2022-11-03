@@ -816,17 +816,22 @@ public abstract class SimplePlugin extends JavaPlugin implements Listener {
 
 			SimpleHologram.onReload();
 
-			Common.setTellPrefix(SimpleSettings.PLUGIN_PREFIX);
-			this.onPluginReload();
-
-			// Something went wrong in the reload pipeline
-			if (!this.isEnabled())
-				return;
-
 			this.startingReloadables = true;
 
 			// Register classes
 			AutoRegisterScanner.scanAndRegister();
+
+			this.onPluginReload();
+
+			// Something went wrong in the reload pipeline
+			if (!this.isEnabled()) {
+				this.startingReloadables = false;
+
+				return;
+			}
+
+			// Register prefix after
+			Common.setTellPrefix(SimpleSettings.PLUGIN_PREFIX);
 
 			Lang.reloadLang();
 			Lang.loadPrefixes();
