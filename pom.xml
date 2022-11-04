@@ -191,7 +191,7 @@
 				<version>1.18.20.0</version>
 				<configuration>
 					<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-					<outputDirectory>${delombok.output}</outputDirectory>
+					<outputDirectory>${project.basedir}/delombok</outputDirectory>
 					<addOutputDirectory>false</addOutputDirectory>
 				</configuration>
 				<executions>
