@@ -26,7 +26,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommandYamlParser;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.entity.Entity;
@@ -2792,6 +2794,15 @@ public final class Common {
 		 * @return
 		 */
 		D convertValue(B value);
+	}
+	public static HashMap<String, List<Command>> getAllCommands(){
+		HashMap<String, List<Command>> toReturn = new HashMap<>();
+		for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+			String pName = plugin.getName();
+			List<Command> commandList = PluginCommandYamlParser.parse(plugin);
+			toReturn.put(pName, commandList);
+		}
+		return toReturn;
 	}
 }
 
