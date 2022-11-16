@@ -367,6 +367,14 @@ public final class Valid {
 		return message == null || message.isEmpty();
 	}
 
+
+	public boolean isNull(final Object object){
+		if(object == null){
+			return true;
+		}
+		else return false;
+	}
+
 	/**
 	 * Return true if all x-y-z coordinates of the given vector are finite valid numbers
 	 * (see {@link Double#isFinite(double)})
