@@ -1545,6 +1545,32 @@ public final class HookManager {
 	}
 
 	/**
+	 * Get the ClaimedResidence object at the given location or null if none
+	 *
+	 * @param location
+	 * @return
+	 */
+	public static ClaimedResidence getClaimedResidence(final Location location){
+		return isResidenceLoaded() ? residenceHook.getClaimedResidence(location) : null;
+	}
+
+	public static ResidencePlayer getResidencePlayer(final UUID uuid){
+		return isResidenceLoaded() ? residenceHook.getResidencePlayer(uuid) : null;
+	}
+
+	public static ResidencePlayer getResidencePlayer(final Player player){
+		return isResidenceLoaded() ? residenceHook.getResidencePlayer(player) : null;
+	}
+
+	/**
+	 * Get the Residence Manager of the residence plugin.
+	 *
+	 */
+	public static ResidenceManager getResidenceManager(){
+		return isResidenceLoaded() ? residenceHook.getResidenceManager() : null;
+	}
+
+	/**
 	 * Get the Residence owner at the given location or null if none
 	 *
 	 * @param location
@@ -2711,6 +2737,11 @@ class ResidenceHook {
 			return res.getName();
 
 		return null;
+	}
+
+	public ClaimedResidence getClaimedResidence(final Location loc){
+
+		return Residence.getInstance().getResidenceManager().getByLoc(loc);
 	}
 
 	public String getResidenceOwner(final Location loc) {
