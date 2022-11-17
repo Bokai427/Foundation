@@ -18,6 +18,8 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
+import com.bekvon.bukkit.residence.containers.ResidencePlayer;
+import com.bekvon.bukkit.residence.protection.ResidenceManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -2718,6 +2720,19 @@ class ResidenceHook {
 			return res.getOwner();
 
 		return null;
+
+	}
+
+	public ResidenceManager getResidenceManager(){
+		return Residence.getInstance().getResidenceManager();
+	}
+
+	public ResidencePlayer getResidencePlayer(final Player player){
+		return this.getResidencePlayer(player.getUniqueId());
+	}
+
+	public ResidencePlayer getResidencePlayer(final UUID uuid){
+		return Residence.getInstance().getPlayerManager().getResidencePlayer(uuid);
 	}
 }
 
