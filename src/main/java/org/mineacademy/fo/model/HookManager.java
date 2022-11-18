@@ -1554,10 +1554,22 @@ public final class HookManager {
 		return isResidenceLoaded() ? residenceHook.getClaimedResidence(location) : null;
 	}
 
+	/**
+	 * Get the ResidencePlayer object from player's uuid
+	 *
+	 * @param uuid
+	 * @return
+	 */
 	public static ResidencePlayer getResidencePlayer(final UUID uuid){
 		return isResidenceLoaded() ? residenceHook.getResidencePlayer(uuid) : null;
 	}
 
+	/**
+	 * Get the ResidencePlayer object from the Player object
+	 *
+	 * @param player
+	 * @return
+	 */
 	public static ResidencePlayer getResidencePlayer(final Player player){
 		return isResidenceLoaded() ? residenceHook.getResidencePlayer(player) : null;
 	}
