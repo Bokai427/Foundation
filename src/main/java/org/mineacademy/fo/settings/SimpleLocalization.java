@@ -103,7 +103,7 @@ public class SimpleLocalization extends YamlStaticConfig {
 	public static final class Commands {
 
 		/**
-		 * true = https://i.imgur.com/us88BCT.png
+		 * true = <a href="https://i.imgur.com/us88BCT.png">...</a>
 		 * false = https://i.imgur.com/N7jLu7v.png
 		 */
 		public static Boolean SIMPLE_HELP_DESIGN = false;
@@ -116,12 +116,12 @@ public class SimpleLocalization extends YamlStaticConfig {
 		/**
 		 * The message shown when console runs a command without specifying target player name
 		 */
-		public static String CONSOLE_MISSING_PLAYER_NAME = "When running from console, specify player name.";
+		public static String CONSOLE_MISSING_PLAYER_NAME = "在控制台執行此指令時，你需要指定玩家名稱。";
 
 		/**
 		 * The message shown when there is a fatal error running this command
 		 */
-		public static String COOLDOWN_WAIT = "&cWait {duration} second(s) before using this command again.";
+		public static String COOLDOWN_WAIT = "&c你需要再等待 {duration} 秒才能使用此指令";
 
 		/**
 		 * Keys below indicate an invalid action or input
@@ -142,7 +142,7 @@ public class SimpleLocalization extends YamlStaticConfig {
 		/**
 		 * The description label
 		 */
-		public static String LABEL_DESCRIPTION = "&c&lDescription:";
+		public static String LABEL_DESCRIPTION = "&c說明:";
 
 		/**
 		 * The optional arguments label

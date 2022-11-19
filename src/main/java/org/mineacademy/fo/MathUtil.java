@@ -6,6 +6,9 @@ import java.util.Collection;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
 import lombok.AccessLevel;
@@ -287,6 +290,23 @@ public final class MathUtil {
 		final double y = v.getX() * sin + v.getY() * cos;
 
 		return v.setX(x).setY(y);
+	}
+
+	/**
+	 * Calculates the vector and sets it in the entity's location in order to
+	 * teleport the entity to the location to look at a block.
+	 *
+	 * @param entity
+	 * @param targetBlock
+	 * @return locationToTeleport
+	 */
+	public static Location calculateLookAt(Entity entity, Block targetBlock) {
+
+		Vector dirBetweenLocations = targetBlock.getLocation().toVector().subtract(entity.getLocation().toVector().subtract(new Vector(0, -1, 0)).subtract(new Vector(0.5, 0, 0.5)));
+
+		Location loc = entity.getLocation();
+		return loc.setDirection(dirBetweenLocations);
+
 	}
 
 	// ----------------------------------------------------------------------------------------------------
