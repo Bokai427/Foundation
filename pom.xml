@@ -27,8 +27,8 @@
 
 	<distributionManagement>
 		<repository>
-			<id>my-repository</id>
-			<url>https://mvn.kod-mc.com/Foundation</url>
+			<id>repo.ctk.tw</id>
+			<url>https://repo.ctk.tw/Foundation</url>
 		</repository>
 	</distributionManagement>
 
