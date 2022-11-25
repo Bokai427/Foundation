@@ -25,6 +25,8 @@
 		</repository>
 	</repositories>
 
+<!--	https://bitbucket.org/kangarko/libraries/raw/master-->
+
 	<distributionManagement>
 		<repository>
 			<id>repo.ctk.tw</id>
