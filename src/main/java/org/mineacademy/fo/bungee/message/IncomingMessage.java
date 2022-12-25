@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.UUID;
 
-import org.bukkit.entity.Player;
 import org.mineacademy.fo.ReflectionUtil;
 import org.mineacademy.fo.bungee.BungeeListener;
 import org.mineacademy.fo.collection.SerializedMap;
@@ -90,9 +89,6 @@ public final class IncomingMessage extends Message {
 		// We are automatically reading the first two strings assuming the
 		// first is the senders server name and the second is the action
 		// -----------------------------------------------------------------
-
-		// Read channel name, dispose, set above
-		this.input.readUTF();
 
 		// Read senders UUID
 		this.setSenderUid(this.input.readUTF());
@@ -245,14 +241,5 @@ public final class IncomingMessage extends Message {
 		this.moveHead(Short.class);
 
 		return this.input.readShort();
-	}
-
-	/**
-	 * Forwards this message to a player
-	 *
-	 * @param player
-	 */
-	public void forward(Player player) {
-		player.sendPluginMessage(SimplePlugin.getInstance(), "BungeeCord", this.data);
 	}
 }

@@ -1939,7 +1939,9 @@ class EssentialsHook {
 
 		if (user == null)
 			try {
-				user = this.ess.getUserMap().getUserFromBukkit(name);
+				Method getUserFromBukkit = ReflectionUtil.getMethod(this.ess.getUserMap().getClass(), "getUserFromBukkit", String.class);
+
+				user = ReflectionUtil.invoke(getUserFromBukkit, this.ess.getUserMap(), name);
 
 			} catch (final Throwable ex) {
 				user = this.ess.getUser(name);
@@ -3614,7 +3616,9 @@ class MythicMobsHook {
 
 		final Object mythicPlugin = ReflectionUtil.invokeStatic(ReflectionUtil.lookupClass("io.lumine.mythic.api.MythicProvider"), "get");
 		final Object mobManager = ReflectionUtil.invoke("getMobManager", mythicPlugin);
-		final Collection<?> activeMobs = ReflectionUtil.invoke("getActiveMobs", mobManager);
+
+		final Method getActiveMobsMethod = ReflectionUtil.getMethod(mobManager.getClass(), "getActiveMobs");
+		final Collection<?> activeMobs = ReflectionUtil.invoke(getActiveMobsMethod, mobManager);
 
 		for (final Object mob : activeMobs) {
 			final UUID uniqueId = ReflectionUtil.invoke("getUniqueId", mob);
