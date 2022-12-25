@@ -1,13 +1,8 @@
 package org.mineacademy.fo.menu;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
@@ -16,14 +11,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.mineacademy.fo.Common;
-import org.mineacademy.fo.ItemUtil;
-import org.mineacademy.fo.Messenger;
-import org.mineacademy.fo.MinecraftVersion;
+import org.mineacademy.fo.*;
 import org.mineacademy.fo.MinecraftVersion.V;
-import org.mineacademy.fo.PlayerUtil;
-import org.mineacademy.fo.ReflectionUtil;
-import org.mineacademy.fo.Valid;
 import org.mineacademy.fo.constants.FoConstants;
 import org.mineacademy.fo.event.MenuCloseEvent;
 import org.mineacademy.fo.event.MenuOpenEvent;
@@ -43,9 +32,12 @@ import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.fo.remain.CompSound;
 import org.mineacademy.fo.settings.SimpleLocalization;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import javax.annotation.Nullable;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The core class of Menu. Represents a simple menu.
@@ -128,7 +120,7 @@ public abstract class Menu {
 	/**
 	 * The inventory title of the menu, colors & are supported
 	 */
-	private String title = "&0Menu";
+	private String title = "&0選單";
 
 	/**
 	 * The size of the menu
@@ -154,6 +146,10 @@ public abstract class Menu {
 	 * A one way boolean set to true in {@link #handleClose(Inventory)}
 	 */
 	private boolean closed = false;
+
+	@Getter
+	@Setter
+	private InventoryType inventoryType = InventoryType.CHEST;
 
 	/**
 	 * Special case button only registered if this menu is {@link MenuQuantitable}
@@ -460,7 +456,7 @@ public abstract class Menu {
 		// Register current menu
 		Common.runLater(1, () -> {
 			try {
-				drawer.display(player);
+				drawer.display(player,inventoryType);
 
 			} catch (final Throwable t) {
 				Common.error(t, "Error opening menu " + Menu.this);

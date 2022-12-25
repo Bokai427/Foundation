@@ -1,14 +1,14 @@
 package org.mineacademy.fo.menu.model;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.remain.CompMaterial;
-
-import lombok.Getter;
 
 /**
  * Represents a way to render the inventory to the player
@@ -129,6 +129,17 @@ public final class InventoryDrawer {
 	 *
 	 * @param player
 	 */
+	public void display(Player player, InventoryType inventoryType) {
+		final Inventory inv = this.build(player,inventoryType);
+
+		player.openInventory(inv);
+	}
+
+	/**
+	 * Display this inventory to the player, closing older inventory if already opened
+	 *
+	 * @param player
+	 */
 	public void display(Player player) {
 		final Inventory inv = this.build(player);
 
@@ -154,6 +165,21 @@ public final class InventoryDrawer {
 
 		// Automatically append the black color in the menu, can be overriden by colors
 		final Inventory inv = Bukkit.createInventory(holder, this.size, Common.colorize("&0" + (this.title.length() > 30 ? this.title.substring(0, 30) : this.title)));
+
+		inv.setContents(this.content);
+
+		return inv;
+	}
+
+	public Inventory build(InventoryHolder holder,InventoryType inventoryType) {
+
+		// Automatically append the black color in the menu, can be overriden by colors
+
+		if(inventoryType == InventoryType.CHEST){
+			return this.build(holder);
+		}
+
+		final Inventory inv = Bukkit.createInventory(holder,inventoryType, Common.colorize("&0" + (this.title.length() > 30 ? this.title.substring(0, 30) : this.title)));
 
 		inv.setContents(this.content);
 

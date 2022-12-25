@@ -6,11 +6,7 @@ import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -83,11 +79,17 @@ public final class MenuListener implements Listener {
 			final Inventory clickedInv = Remain.getClickedInventory(event);
 
 			final InventoryAction action = event.getAction();
-			final MenuClickLocation whereClicked = clickedInv != null ? clickedInv.getType() == InventoryType.CHEST ? MenuClickLocation.MENU : MenuClickLocation.PLAYER_INVENTORY : MenuClickLocation.OUTSIDE;
+			final MenuClickLocation whereClicked;
+			if (clickedInv != null) {
+				if (clickedInv.getType() == InventoryType.PLAYER) whereClicked = MenuClickLocation.PLAYER_INVENTORY;
+				else whereClicked = MenuClickLocation.MENU;
+			} else {
+				whereClicked = MenuClickLocation.OUTSIDE;
+			}
 
 			final boolean allowed = menu.isActionAllowed(whereClicked, event.getSlot(), slotItem, cursor, action);
 
-			if (action.toString().contains("PICKUP") || action.toString().contains("PLACE") || action.toString().equals("SWAP_WITH_CURSOR") || action == InventoryAction.CLONE_STACK) {
+			if (action.toString().contains("PICKUP") || action.toString().contains("PLACE") || action.toString().equals("SWAP_WITH_CURSOR") || action == InventoryAction.HOTBAR_SWAP || action == InventoryAction.CLONE_STACK) {
 				if (whereClicked == MenuClickLocation.MENU)
 					try {
 						final Button button = menu.getButton(slotItem);

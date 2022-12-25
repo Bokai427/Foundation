@@ -1,33 +1,15 @@
 package org.mineacademy.fo.command;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
+import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
-import org.mineacademy.fo.Common;
-import org.mineacademy.fo.Messenger;
-import org.mineacademy.fo.PlayerUtil;
-import org.mineacademy.fo.ReflectionUtil;
-import org.mineacademy.fo.TabUtil;
-import org.mineacademy.fo.Valid;
+import org.mineacademy.fo.*;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.collection.expiringmap.ExpiringMap;
 import org.mineacademy.fo.command.SimpleCommandGroup.MainCommand;
@@ -35,18 +17,17 @@ import org.mineacademy.fo.debug.LagCatcher;
 import org.mineacademy.fo.exception.CommandException;
 import org.mineacademy.fo.exception.EventHandledException;
 import org.mineacademy.fo.exception.InvalidCommandArgException;
-import org.mineacademy.fo.model.ChatPaginator;
-import org.mineacademy.fo.model.Replacer;
-import org.mineacademy.fo.model.SimpleComponent;
-import org.mineacademy.fo.model.SimpleTime;
-import org.mineacademy.fo.model.Variables;
+import org.mineacademy.fo.model.*;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.fo.remain.Remain;
 import org.mineacademy.fo.settings.SimpleLocalization;
 
-import lombok.Getter;
-import lombok.NonNull;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * A simple command used to replace all Bukkit/Spigot command functionality
@@ -124,7 +105,7 @@ public abstract class SimpleCommand extends Command {
 	 * Should we automatically send usage message when the first argument
 	 * equals to "help" or "?" ?
 	 */
-	private boolean autoHandleHelp = true;
+	private boolean autoHandleHelp = false;
 
 	// ----------------------------------------------------------------------
 	// Temporary variables

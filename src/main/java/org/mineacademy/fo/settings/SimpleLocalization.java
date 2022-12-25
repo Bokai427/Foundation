@@ -137,7 +137,7 @@ public class SimpleLocalization extends YamlStaticConfig {
 		/**
 		 * The authors label
 		 */
-		public static String LABEL_AUTHORS = "Made by";
+		public static String LABEL_AUTHORS = "作者 : ";
 
 		/**
 		 * The description label
