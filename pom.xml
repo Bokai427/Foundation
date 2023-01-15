@@ -8,11 +8,11 @@
 
 	<groupId>org.mineacademy</groupId>
 	<artifactId>Foundation</artifactId>
-	<version>6.2.5</version>
+	<version>6.2.6</version>
 	<packaging>jar</packaging>
 
 	<name>Foundation</name>
-	<description>A fork of foundation by BOKAI</description>
+	<description>A framework for easy creation of rich Bukkit plugins.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -109,6 +109,11 @@
 			<groupId>org.mineacademy.plugin</groupId>
 			<artifactId>MassiveCore</artifactId>
 			<version>3.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mineacademy.plugin</groupId>
+			<artifactId>MythicMobs</artifactId>
+			<version>5.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mineacademy.plugin</groupId>

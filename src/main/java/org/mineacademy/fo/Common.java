@@ -630,7 +630,11 @@ public final class Common {
 			result = result.replaceAll(Pattern.quote(matched), replacement);
 		}
 
-		result = result.replace("\\\\#", "#").replace("\\#", "#");
+		if (result.contains("\\\\#"))
+			result = result.replace("\\\\#", "\\#");
+
+		else if (result.contains("\\#"))
+			result = result.replace("\\#", "#");
 
 		return result;
 	}
