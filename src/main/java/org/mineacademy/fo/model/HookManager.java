@@ -269,16 +269,17 @@ public final class HookManager {
 		}
 
 		if (Common.doesPluginExist("ProtocolLib")) {
-			protocolLibHook = new ProtocolLibHook();
-
 			// Also check if the library is loaded properly.
 			try {
+				protocolLibHook = new ProtocolLibHook();
+
 				if (MinecraftVersion.newerThan(V.v1_6))
 					Class.forName("com.comphenix.protocol.wrappers.WrappedChatComponent");
+
 			} catch (final Throwable t) {
 				protocolLibHook = null;
 
-				Common.throwError(t, "You are running an old and unsupported version of ProtocolLib, please update it.");
+				Common.error(t, "You are running an old and unsupported version of ProtocolLib, please update it. The plugin will continue to function without hooking into it.");
 			}
 		}
 
@@ -1351,12 +1352,12 @@ public final class HookManager {
 	 * Returns TRUE or FALSE depending on the result of the Vault check.
 	 * Returns FALSE on exception and fails silently by printing the error to the console.
 	 *
-	 * @param sender
-	 * @param perm
+	 * @param player
+	 * @param permission
 	 * @return
 	 */
-	public static Boolean hasVaultPermissionFast(final CommandSender sender, final String permission) {
-		return vaultHook.hasPerm(sender, permission);
+	public static Boolean hasVaultPermissionFast(final Player player, final String permission) {
+		return vaultHook.hasPerm(player, permission);
 	}
 
 	/**
@@ -2313,16 +2314,16 @@ class VaultHook {
 	// ------------------------------------------------------------------------------
 
 	@Nullable
-	Boolean hasPerm(final CommandSender sender, final String permission) {
+	Boolean hasPerm(final Player player, final String permission) {
 		if (this.permissions == null)
 			return null;
 
 		try {
-			return this.permissions.playerHas((World) null, sender.getName(), permission);
+			return this.permissions.playerHas((World) null, player.getName(), permission);
 
 		} catch (final Throwable t) {
 			Common.logTimed(900,
-					"SEVERE: Unable to ask Vault plugin if " + sender.getName() + " has '" + permission + "' permission, returning false. "
+					"SEVERE: Unable to ask Vault plugin if " + player.getName() + " has '" + permission + "' permission, returning false. "
 							+ "This error only shows every 15 minutes. "
 							+ "Run /vault-info and check if your permissions plugin is running correctly.");
 
@@ -3745,24 +3746,52 @@ class MythicMobsHook {
 
 class LandsHook {
 
-	private final Object lands;
+	private final Object landsClass;
+	private final Method getArea;
 	private final Method getLand;
+	private final Method getName;
 
 	LandsHook() {
-		final Class<?> landsIntegration = ReflectionUtil.lookupClass("me.angeschossen.lands.api.integration.LandsIntegration");
-		final Constructor<?> con = ReflectionUtil.getConstructor(landsIntegration, Plugin.class);
+		final Class<?> lands = ReflectionUtil.lookupClass("me.angeschossen.lands.api.LandsIntegration");
+		final Class<?> area = ReflectionUtil.lookupClass("me.angeschossen.lands.api.land.Area");
+		final Class<?> land = ReflectionUtil.lookupClass("me.angeschossen.lands.api.land.Land");
 
-		this.lands = ReflectionUtil.instantiate(con, SimplePlugin.getInstance());
-		this.getLand = ReflectionUtil.getMethod(landsIntegration, "getLand", Location.class);
+		final Method of = ReflectionUtil.getMethod(lands, "of", Plugin.class);
+
+		this.landsClass = ReflectionUtil.invokeStatic(of, SimplePlugin.getInstance());
+		this.getArea = ReflectionUtil.getMethod(lands, "getArea", Location.class);
+		this.getLand = ReflectionUtil.getMethod(area, "getLand");
+		this.getName = ReflectionUtil.getMethod(land, "getName");
 	}
 
-	Collection<Player> getLandPlayers(Player player) {
-		final Object land = ReflectionUtil.invoke(this.getLand, this.lands, player.getLocation());
+	Collection<Player> getLandPlayers(Player sender) {
+		final List<Player> playersAtLocation = new ArrayList<>();
 
-		if (land != null)
-			return (Collection<Player>) ReflectionUtil.invoke("getOnlinePlayers", land);
+		Object senderArea = ReflectionUtil.invoke(this.getArea, this.landsClass, sender.getLocation());
+		Object senderLand = senderArea != null ? ReflectionUtil.invoke(this.getLand, senderArea) : null;
 
-		return new ArrayList<>();
+		boolean senderInWilderness = senderLand == null;
+		String senderLandName = senderInWilderness ? "" : ReflectionUtil.invoke(this.getName, senderLand);
+
+		for (Player recipient : Remain.getOnlinePlayers()) {
+
+			Object recipientArea = ReflectionUtil.invoke(this.getArea, this.landsClass, recipient.getLocation());
+			Object recipientLand = recipientArea != null ? ReflectionUtil.invoke(this.getLand, recipientArea) : null;
+			boolean recipientInWilderness = recipientLand == null;
+
+			// Both in wilderness
+			if (recipientInWilderness && senderInWilderness)
+				playersAtLocation.add(recipient);
+
+			// Other player in land
+			if (senderLand == null)
+				continue;
+
+			if (recipientLand != null && ReflectionUtil.invoke(this.getName, recipientLand).equals(senderLandName))
+				playersAtLocation.add(recipient);
+		}
+
+		return playersAtLocation;
 	}
 }
 

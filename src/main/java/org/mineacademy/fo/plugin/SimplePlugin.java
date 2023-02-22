@@ -229,7 +229,7 @@ public abstract class SimplePlugin extends JavaPlugin implements Listener {
 				&& MinecraftVersion.atLeast(V.v1_8)) {
 			this.getLogger().warning(Common.consoleLine());
 			this.getLogger().warning("You're not using Paper!");
-			this.getLogger().warning("Detected: " + version);
+			this.getLogger().warning("Detected: " + version + " / " + Bukkit.getName());
 			this.getLogger().warning("");
 			this.getLogger().warning("Third party forks are known to alter server in unwanted ways.");
 			this.getLogger().warning("If you experience issues with " + named + ", download Paper");
@@ -314,6 +314,9 @@ public abstract class SimplePlugin extends JavaPlugin implements Listener {
 			final Messenger messenger = this.getServer().getMessenger();
 
 			// Always make the main channel available
+			if (!messenger.isIncomingChannelRegistered(this, "BungeeCord"))
+				messenger.registerIncomingPluginChannel(this, "BungeeCord", BungeeListener.BungeeListenerImpl.getInstance());
+
 			if (!messenger.isOutgoingChannelRegistered(this, "BungeeCord"))
 				messenger.registerOutgoingPluginChannel(this, "BungeeCord");
 
@@ -503,14 +506,6 @@ public abstract class SimplePlugin extends JavaPlugin implements Listener {
 	 * Then you just call this method and parse the field into it from your onReloadablesStart method.
 	 */
 	protected final void registerBungeeCord(@NonNull BungeeListener bungee) {
-		final Messenger messenger = this.getServer().getMessenger();
-
-		if (!messenger.isIncomingChannelRegistered(this, bungee.getChannel()))
-			messenger.registerIncomingPluginChannel(this, bungee.getChannel(), bungee);
-
-		if (!messenger.isOutgoingChannelRegistered(this, bungee.getChannel()))
-			messenger.registerOutgoingPluginChannel(this, bungee.getChannel());
-
 		this.reloadables.registerEvents(bungee);
 	}
 
@@ -800,6 +795,9 @@ public abstract class SimplePlugin extends JavaPlugin implements Listener {
 			final Messenger messenger = this.getServer().getMessenger();
 
 			// Always make the main channel available
+			if (!messenger.isIncomingChannelRegistered(this, "BungeeCord"))
+				messenger.registerIncomingPluginChannel(this, "BungeeCord", BungeeListener.BungeeListenerImpl.getInstance());
+
 			if (!messenger.isOutgoingChannelRegistered(this, "BungeeCord"))
 				messenger.registerOutgoingPluginChannel(this, "BungeeCord");
 

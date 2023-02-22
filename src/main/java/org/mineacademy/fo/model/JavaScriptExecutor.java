@@ -14,6 +14,7 @@ import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -94,6 +95,7 @@ public final class JavaScriptExecutor {
 
 			Common.logFramed(false, Common.toArray(warningMessage));
 		}
+
 	}
 
 	/**
@@ -128,6 +130,11 @@ public final class JavaScriptExecutor {
 	 * @return
 	 */
 	public static Object run(@NonNull String javascript, final CommandSender sender, final Event event) {
+
+		// Mohist is unsupported
+		if (Bukkit.getName().equals("Mohist"))
+			return null;
+
 		final String oldCode = new String(javascript);
 
 		// Cache for highest performance
@@ -227,6 +234,10 @@ public final class JavaScriptExecutor {
 	 * @return
 	 */
 	public static Object run(final String javascript, final Map<String, Object> replacements) {
+
+		// Mohist is unsupported
+		if (Bukkit.getName().equals("Mohist"))
+			return javascript;
 
 		if (engine == null) {
 			Common.warning("Not running script because JavaScript library is missing "
