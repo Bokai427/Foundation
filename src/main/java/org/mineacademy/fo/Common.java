@@ -2810,7 +2810,7 @@ public final class Common {
 		}
 		return toReturn;
 	}
-}
+
 
 	/**
 	 * Represents a timed chat sequence, used when checking for
