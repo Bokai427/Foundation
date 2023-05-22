@@ -1,19 +1,33 @@
 ### Foundation is a library for bootstrapping Minecraft plugins.
-[![Build Status](https://ci.kod-mc.com/buildStatus/icon?job=Foundation)](https://ci.kod-mc.com/job/Foundation/)
+[![](https://jitpack.io/v/kangarko/Foundation.svg)](https://jitpack.io/#kangarko/Foundation)
+[![](https://javadoc.jitpack.io/v/kangarko/Foundation.svg)](https://javadoc.jitpack.io/#kangarko/Foundation)
+
+Foundation enables people develop Minecraft plugins faster, saving boilerplate code and so that you can focus on what matters the most, putting your ideas into reality.
+
+Some features include:
+
+- GUI menu APIs
+- Compatibility wrappers: Example: Send title/animations/packets on multiple MC versions with a single call
+- Advanced command system without the need of editing plugin.yml
+- Localization support
+- Third party hooks: Packets, Discord, Citizens, Towny, etc.
+- Auto-updating configuration with comments support
+- Time-saving wrappers: Databases (flatfile SQL, HikariCP, MySQL), holograms API, custom items and skulls API, and so much more! 
 
 Thousands of servers are running on Foundation since 2013. It has been battle tested and proven in plugins ChatControl, Boss, CoreArena, Confiscate, AutoPlay, Puncher, Winter, AnimeX and others.
 
 Foundation has never been publicly released before MineAcademy. We decided to release its sources to the public and teach it to enable people develop plugins faster, saving boilerplate code and thus focus on what matters the most, putting your ideas out there.
 
-Check out https://mineacademy.org/plugins for our official list of plugins that use Foundation.
+### Sample usage
 
+Please see [this link](https://github.com/kangarko/plugintemplate) for a sample plugin demostrating different Foundation abilities.
 
 ### Compatibility
 
-We aim to provide extreme compatibility layer enabling these Minecraft versions to work:
+We aim to provide broad compatibility layer enabling the below Minecraft versions to work:
 
-- 1.2.5 (from 2012) - Of course, there are things that don't work due to lacking API, but it loads and you can build with Foundation!
-- 1.3.2, 1.4.7, 1.5.2, 1.6.4
+- 1.2.5 (from 2012) - See mineacademy.org/oldmcsupport for setup instructions.
+- 1.3.2, 1.4.7, 1.5.2, 1.6.4 - Many APIs are missing due to lack of features/access.
 - 1.7.10
 - 1.8.8
 - 1.9.x, 1.10.x, 1.11.x, 1.12.x

@@ -13,6 +13,9 @@ import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.menu.model.MenuClickLocation;
 import org.mineacademy.fo.remain.CompMaterial;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * A simple menu allowing players to drop or take items.
  *
@@ -24,7 +27,9 @@ public abstract class MenuContainer extends Menu {
 	/**
 	 * The filler item we fill the bottom bar with for safety.
 	 */
-	protected static final ItemStack BOTTOM_BAR_FILLER_ITEM = ItemCreator.of(CompMaterial.LIGHT_GRAY_STAINED_GLASS_PANE, " ").make();
+	@Getter
+	@Setter
+	private ItemStack bottomBarFillerItem = ItemCreator.of(CompMaterial.LIGHT_GRAY_STAINED_GLASS_PANE, " ").make();
 
 	/**
 	 * Create a new menu that can edit chances of the items you put inside.
@@ -55,7 +60,7 @@ public abstract class MenuContainer extends Menu {
 			return customDrop;
 
 		if (slot > this.getSize() - 9)
-			return BOTTOM_BAR_FILLER_ITEM;
+			return this.bottomBarFillerItem;
 
 		return NO_ITEM;
 	}
@@ -73,9 +78,6 @@ public abstract class MenuContainer extends Menu {
 		if (location != MenuClickLocation.MENU)
 			return true;
 
-		if (slot >= this.getSize() - 9)
-			return false;
-
 		if (!this.canEditItem(location, slot, clicked, cursor, action))
 			return false;
 
@@ -88,6 +90,8 @@ public abstract class MenuContainer extends Menu {
 	 *
 	 * This is called from {@link #isActionAllowed(MenuClickLocation, int, ItemStack, ItemStack)} and
 	 * by defaults forwards the call to {@link #canEditItem(int)}
+	 *
+	 * Bottom row is always protected by
 	 *
 	 * @param location
 	 * @param slot
@@ -113,7 +117,7 @@ public abstract class MenuContainer extends Menu {
 	 * @return
 	 */
 	protected boolean canEditItem(int slot) {
-		return true;
+		return slot >= this.getSize() - 9;
 	}
 
 	/**

@@ -53,7 +53,6 @@ import org.mineacademy.fo.metrics.Metrics;
 import org.mineacademy.fo.model.DiscordListener;
 import org.mineacademy.fo.model.FolderWatcher;
 import org.mineacademy.fo.model.HookManager;
-import org.mineacademy.fo.model.JavaScriptExecutor;
 import org.mineacademy.fo.model.SimpleHologram;
 import org.mineacademy.fo.model.SimpleScoreboard;
 import org.mineacademy.fo.model.SpigotUpdater;
@@ -335,6 +334,9 @@ public abstract class SimplePlugin extends JavaPlugin implements Listener {
 				return;
 			}
 
+			// AutoRegister finds this class and saves it
+			CompMetadata.MetadataFile.saveOnce();
+
 			this.onReloadablesStart();
 
 			this.startingReloadables = false;
@@ -369,9 +371,6 @@ public abstract class SimplePlugin extends JavaPlugin implements Listener {
 
 				this.reloadables.registerEvents(DiscordListener.DiscordListenerImpl.getInstance());
 			}
-
-			// Prepare Nashorn engine
-			JavaScriptExecutor.run("");
 
 			// Finish off by starting metrics (currently bStats)
 			if (this.getMetricsPluginId() != -1)
@@ -506,7 +505,17 @@ public abstract class SimplePlugin extends JavaPlugin implements Listener {
 	 * Then you just call this method and parse the field into it from your onReloadablesStart method.
 	 */
 	protected final void registerBungeeCord(@NonNull BungeeListener bungee) {
+		String chanelName = bungee.getChannel();
+		Messenger messenger = this.getServer().getMessenger();
+
+		if (!messenger.isIncomingChannelRegistered(this, chanelName))
+			messenger.registerIncomingPluginChannel(this, chanelName, BungeeListener.BungeeListenerImpl.getInstance());
+
+		if (!messenger.isOutgoingChannelRegistered(this, chanelName))
+			messenger.registerOutgoingPluginChannel(this, chanelName);
+
 		this.reloadables.registerEvents(bungee);
+
 	}
 
 	/**
@@ -866,6 +875,9 @@ public abstract class SimplePlugin extends JavaPlugin implements Listener {
 
 		BlockVisualizer.stopAll();
 		FolderWatcher.stopThreads();
+
+		// Force metadata save on old MC versions upon reload/disable
+		CompMetadata.MetadataFile.saveOnce();
 
 		FileConfig.clearLoadedSections();
 
