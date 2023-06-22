@@ -946,6 +946,9 @@ public abstract class FileConfig {
 	public final List<Object> getList(final String path) {
 		final Object obj = this.getObject(path);
 
+		if (obj != null && obj.toString().equals("[]"))
+			return new ArrayList<>();
+
 		return obj instanceof Collection<?> ? new ArrayList<>((Collection<Object>) obj) : obj != null ? Arrays.asList(obj) : new ArrayList<>();
 	}
 

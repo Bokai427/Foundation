@@ -24,6 +24,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -698,15 +700,15 @@ public final class Common {
 		// Replace hex colors, both raw and parsed
 		/*if (Remain.hasHexColors()) {
 			matcher = HEX_COLOR_REGEX.matcher(message);
-		
+
 			while (matcher.find())
 				message = matcher.replaceAll("");
-		
+
 			matcher = RGB_X_COLOR_REGEX.matcher(message);
-		
+
 			while (matcher.find())
 				message = matcher.replaceAll("");
-		
+
 			message = message.replace(ChatColor.COLOR_CHAR + "x", "");
 		}*/
 
@@ -1178,7 +1180,7 @@ public final class Common {
 	 * @param playerReplacement
 	 * @param command
 	 */
-	public static void dispatchCommand(final CommandSender playerReplacement, @NonNull String command) {
+	public static void dispatchCommand(@Nullable CommandSender playerReplacement, @NonNull String command) {
 		if (command.isEmpty() || command.equalsIgnoreCase("none"))
 			return;
 
@@ -1300,7 +1302,7 @@ public final class Common {
 	 * @param message
 	 */
 	public static void warning(String message) {
-		log("&cWarning: &f" + message);
+		log("&cWarning: &7" + message);
 	}
 
 	/**
