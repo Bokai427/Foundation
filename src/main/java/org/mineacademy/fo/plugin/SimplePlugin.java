@@ -22,16 +22,15 @@ import javax.annotation.Nullable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
+import org.mineacademy.fo.BungeeUtil;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.FileUtil;
 import org.mineacademy.fo.MinecraftVersion;
@@ -48,6 +47,7 @@ import org.mineacademy.fo.event.SimpleListener;
 import org.mineacademy.fo.exception.FoException;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.MenuListener;
+import org.mineacademy.fo.menu.tool.Tool;
 import org.mineacademy.fo.menu.tool.ToolsListener;
 import org.mineacademy.fo.metrics.Metrics;
 import org.mineacademy.fo.model.DiscordListener;
@@ -1290,63 +1290,5 @@ public abstract class SimplePlugin extends JavaPlugin implements Listener {
 	@Override
 	public final PluginCommand getCommand(final String name) {
 		return super.getCommand(name);
-	}
-
-	/**
-	 * @deprecated do not use
-	 */
-	@Deprecated
-	@Override
-	public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-		throw this.unsupported("onCommand");
-	}
-
-	/**
-	 * @deprecated do not use
-	 */
-	@Deprecated
-	@Override
-	public final List<String> onTabComplete(final CommandSender sender, final Command command, final String alias, final String[] args) {
-		throw this.unsupported("onTabComplete");
-	}
-
-	/**
-	 * @deprecated do not use
-	 */
-	@Deprecated
-	@Override
-	public final FileConfiguration getConfig() {
-		throw this.unsupported("getConfig");
-	}
-
-	/**
-	 * @deprecated do not use
-	 */
-	@Deprecated
-	@Override
-	public final void saveConfig() {
-		throw this.unsupported("saveConfig");
-	}
-
-	/**
-	 * @deprecated do not use
-	 */
-	@Deprecated
-	@Override
-	public final void saveDefaultConfig() {
-		throw this.unsupported("saveDefaultConfig");
-	}
-
-	/**
-	 * @deprecated do not use
-	 */
-	@Deprecated
-	@Override
-	public final void reloadConfig() {
-		throw new FoException("Cannot call reloadConfig in " + this.getDataFolder().getName() + ", use reload()!");
-	}
-
-	private FoException unsupported(final String method) {
-		return new FoException("Cannot call " + method + " in " + this.getDataFolder().getName() + ", use YamlConfig or SimpleCommand classes in Foundation for that!");
 	}
 }
