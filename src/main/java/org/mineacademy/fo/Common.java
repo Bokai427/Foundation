@@ -2726,6 +2726,21 @@ public final class Common {
 			e.printStackTrace();
 		}
 	}
+	// ------------------------------------------------------------------------------------------------------------
+	// Added for MorefunServer
+	// ------------------------------------------------------------------------------------------------------------
+
+	public static String getFormatedWorldName(String worldName) {
+		switch (worldName) {
+			case "world":
+				return ChatColor.GOLD + "主世界";
+			case "world_nether":
+				return ChatColor.DARK_RED + "地獄";
+			case "world_the_end":
+				return ChatColor.GREEN + "終界";
+		}
+		return ChatColor.RED + "未知世界";
+	}
 
 	// ------------------------------------------------------------------------------------------------------------
 	// Classes
