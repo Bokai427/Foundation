@@ -12,14 +12,14 @@ public interface BungeeMessageType {
 	 *
 	 * @return
 	 */
-	Class<?>[] getContent();
+	Class<?>[] content = new Class[0];
 
 	/**
 	 * The name of this action
 	 *
 	 * @return
 	 */
-	String name();
+	String name = "";
 
 	/**
 	 * Retrieve BungeeAction by its name
@@ -33,7 +33,7 @@ public interface BungeeMessageType {
 		final BungeeMessageType[] actions = listener.getActions();
 
 		for (final BungeeMessageType action : actions)
-			if (action.name().equals(name))
+			if (action.name.equals(name))
 				return action;
 
 		return null;

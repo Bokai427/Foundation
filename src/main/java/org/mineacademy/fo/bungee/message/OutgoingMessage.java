@@ -171,7 +171,7 @@ public final class OutgoingMessage extends Message {
 		out.writeUTF(this.getListener().getChannel());
 		out.writeUTF(UUID.fromString("00000000-0000-0000-0000-000000000000").toString());
 		out.writeUTF(serverName);
-		out.writeUTF(this.getAction().name());
+		out.writeUTF(this.getAction().name);
 
 		for (final Object object : this.queue)
 			if (object instanceof String)

@@ -43,8 +43,8 @@ abstract class Message {
 	protected final void moveHead(Class<?> typeOf) {
 		Valid.checkNotNull(this.action, "Action not set!");
 
-		final Class<?>[] content = this.action.getContent();
-		Valid.checkBoolean(this.actionHead < content.length, "Head out of bounds! Max data size for " + this.action.name() + " is " + content.length);
+		final Class<?>[] content = this.action.content;
+		Valid.checkBoolean(this.actionHead < content.length, "Head out of bounds! Max data size for " + this.action.name + " is " + content.length);
 
 		this.actionHead++;
 	}
